@@ -116,8 +116,7 @@ def register():
 
 @app.route('/login', methods=["GET", "POST"])
 def login():
-    form = LoginForm()
-    if form.validate_on_submit():
+    if request == 'POST':
         user_to_login = User.query.filter_by(email=request.form['email']).first()
         if not user_to_login:
             flash("Username or password incorrect, please try again!")
@@ -129,7 +128,7 @@ def login():
         else:
             login_user(user_to_login)
             return redirect(url_for('get_all_posts'))
-    return render_template("login.html", form=form, logged_in=current_user.is_authenticated)
+    return render_template("login.html", logged_in=current_user.is_authenticated)
 
 
 @app.route('/logout')
